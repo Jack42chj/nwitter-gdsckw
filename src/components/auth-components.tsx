@@ -23,12 +23,17 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
-    padding: 10px 20px;
+    padding: 15px 20px;
+    margin: 5px 0px;
     border-radius: 50px;
     border: none;
     width: 100%;
-    font-size: 16px;
+    font-size: 18px;
     &[type="submit"]{
+        background-color: #F29727;
+        font-family: 'Patua One';
+        font-size: 18px;
+        color: #FCFCFC;
         cursor: pointer;
         &:hover{
             opacity: 0.8;
@@ -37,13 +42,14 @@ export const Input = styled.input`
 `;
 
 export const Error = styled.span`
-    font-weight: 600;
-    color: tomato;
+    color: #F24C3D;
 `;
 
 export const Switcher = styled.span`
     margin-top: 20px;
+    font-size: 18px;
     a {
-        color: #1d9bf0;
+        color: #2b2929;
+        font-weight: 500;
     }
 `;
