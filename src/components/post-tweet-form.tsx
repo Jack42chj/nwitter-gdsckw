@@ -1,5 +1,7 @@
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import styled from "styled-components";
+import { auth, db } from "../firebase";
 
 const Form = styled.form`
     display: flex;
@@ -8,32 +10,31 @@ const Form = styled.form`
 `;
 
 const TextArea = styled.textarea`
-    border: 2px solid #FCFCFC;
+    border: 3px solid #FCFCFC;
     padding: 20px;
     border-radius: 20px;
-    font-size: 16px;
+    font-size: 18px;
     font-family: 'Patua One', serif;
-    color: #FCFCFC;
-    background-color: #000000;
+    color: #494949;
+    background-color: #FCFCFC;
     width: 100%;
     resize: none;
     &::placeholder {
-        font-size: 16px;
+        font-size: 18px;
     }
     &:focus {
         outline: none;
-        border-color: #FF0000;
+        border-color: #540375;
     }
 `;
 
 const AttatchFileButton = styled.label`
-    padding: 10px 0px;
-    color: #1d9bf0;
+    padding: 15px 0px;
+    color: #F2BE22;
     text-align: center;
-    border-radius: 20px;
-    border: 1px solid #1d9bf0;
-    font-size: 14px;
-    font-weight: 600;
+    border-radius: 50px;
+    border: 3px solid #F2BE22;
+    font-size: 16px;
     cursor: pointer;
 `;
 
@@ -42,12 +43,13 @@ const AttatchFileInput = styled.input`
 `;
 
 const SubmitBtn = styled.input`
-    background-color: #1d9bf0;
+    background-color: #F29727;
     color: #FCFCFC;
     border: none;
-    padding: 10px 0px;
-    border-radius: 20px;
-    font-size: 16px;
+    padding: 15px 0px;
+    border-radius: 50px;
+    font-family: 'Patua One', serif;
+    font-size: 18px;
     cursor: pointer;
     &:hover,
     &:active {
@@ -68,8 +70,26 @@ export default function PostTweetForm() {
             setFile(files[0]);
         }
     };
+    const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if(!user || isLoading || tweet === "" || tweet.length > 180) return;
+        try {
+            setLoading(true);
+            await addDoc(collection(db, "tweets"), {
+                tweet,
+                createdAt: Date.now(),
+                username: user.displayName || "Anonymous",
+                userId: user.uid,
+            });
+        } catch(e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    };
     return(
-        <Form>
+        <Form onSubmit={onSubmit}>
             <TextArea 
                 rows={5}
                 maxLength={180}
