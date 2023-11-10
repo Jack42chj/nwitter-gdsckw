@@ -19,7 +19,7 @@ export default function LogIn() {
         } else if (name === "password") {
             setPassword(value)
         }
-    }
+    };
     const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
@@ -39,7 +39,7 @@ export default function LogIn() {
         } finally {
             setLoading(false);
         }
-    }
+    };
     return (
         <Wrapper>
             <Title>Log into X</Title>
@@ -81,4 +81,4 @@ export default function LogIn() {
             <GithubButton />
         </Wrapper>
     );
-}
+};

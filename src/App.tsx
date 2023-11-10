@@ -42,8 +42,8 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
-  }
-])
+  },
+]);
 
 const GlobalStyles = createGlobalStyle`
   ${reset};
@@ -68,15 +68,16 @@ function App() {
   const init = async() => {
     await auth.authStateReady();
     setLoading(false);
-  }
-  useEffect(() => {init();
+  };
+  useEffect(() => {
+    init();
   }, []);
   return (
     <Wrapper>
       <GlobalStyles />
       {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default App;

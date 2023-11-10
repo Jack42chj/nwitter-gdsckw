@@ -29,13 +29,13 @@ export const Input = styled.input`
     border: none;
     width: 100%;
     font-size: 18px;
-    &[type="submit"]{
+    &[type="submit"] {
         background-color: #F29727;
         font-family: 'Patua One';
         font-size: 18px;
         color: #FCFCFC;
         cursor: pointer;
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
     }

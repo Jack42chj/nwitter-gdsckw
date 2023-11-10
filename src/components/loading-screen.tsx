@@ -16,5 +16,5 @@ export default function LoadingScreen() {
         <Wrapper>
             <Text>Loading...</Text>
         </Wrapper>
-    )
-}
+    );
+};

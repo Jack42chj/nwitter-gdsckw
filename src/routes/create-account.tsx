@@ -22,7 +22,7 @@ export default function CreateAccount() {
         } else if (name === "password") {
             setPassword(value)
         }
-    }
+    };
     const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
@@ -46,7 +46,7 @@ export default function CreateAccount() {
         } finally {
             setLoading(false);
         }
-    }
+    };
     return (
         <Wrapper>
             <Title>Join X</Title>
@@ -96,4 +96,4 @@ export default function CreateAccount() {
             <GithubButton />
         </Wrapper>
     );
-}
+};
