@@ -1,7 +1,8 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import styled from "styled-components";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Form = styled.form`
     display: flex;
@@ -66,8 +67,12 @@ export default function PostTweetForm() {
     };
     const onFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
+        const MAX_FILE_SIZE_LIMIT = 1024 * 1024; //1MB
         if (files && files.length === 1) {
-            setFile(files[0]);
+            if (files[0].size < MAX_FILE_SIZE_LIMIT)
+                setFile(files[0]);
+            else
+                alert("Maximum File Size Exceeded!");
         }
     };
     const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
@@ -76,12 +81,22 @@ export default function PostTweetForm() {
         if(!user || isLoading || tweet === "" || tweet.length > 180) return;
         try {
             setLoading(true);
-            await addDoc(collection(db, "tweets"), {
+            const doc = await addDoc(collection(db, "tweets"), {
                 tweet,
                 createdAt: Date.now(),
                 username: user.displayName || "Anonymous",
                 userId: user.uid,
             });
+            if (file) {
+                const locationRef = ref(storage, `tweets/${user.uid}-${user.displayName}/${doc.id}`);
+                const result = await uploadBytes(locationRef, file);
+                const url = await getDownloadURL(result.ref);
+                await updateDoc(doc, {
+                    photo: url,
+                });
+            }
+            setTweet("");
+            setFile(null);
         } catch(e) {
             console.log(e);
         } finally {
