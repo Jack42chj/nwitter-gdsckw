@@ -66,15 +66,13 @@ export default function PostTweetForm() {
         setTweet(e.target.value);
     };
     const onFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        const { target: { id, files } } = e;
-        if (id === "file") {
-            const MAX_FILE_SIZE_LIMIT = 1024 * 1024; //1MB
-            if (files && files.length === 1) {
-                if (files[0].size < MAX_FILE_SIZE_LIMIT)
-                    setFile(files[0]);
-                else
-                    alert("Maximum File Size Exceeded!");
-            }
+        const { files } = e.target;
+        const MAX_FILE_SIZE_LIMIT = 1024 * 1024; //1MB
+        if (files && files.length === 1) {
+            if (files[0].size < MAX_FILE_SIZE_LIMIT)
+                setFile(files[0]);
+            else
+                alert("Maximum File Size Exceeded!");
         }
     };
     const onSubmit = async (e:React.FormEvent<HTMLFormElement>) => {

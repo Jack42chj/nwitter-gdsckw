@@ -143,15 +143,13 @@ export default function Tweet({ username, photo, tweet, userId, id }:ITweet) {
         setNewText(value);
     };
     const onNewFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        const { target: { id, files } } = e;
-        if (id === "newFile") {
-            const MAX_FILE_SIZE_LIMIT = 1024 * 1024; //1MB
-            if (files && files.length === 1) {
-                if (files[0].size < MAX_FILE_SIZE_LIMIT)
-                    setNewFile(files[0]);
-                else
-                    alert("Maximum File Size Exceeded!");
-            }
+        const { files } = e.target;
+        const MAX_FILE_SIZE_LIMIT = 1024 * 1024; //1MB
+        if (files && files.length === 1) {
+            if (files[0].size < MAX_FILE_SIZE_LIMIT)
+                setNewFile(files[0]);
+            else
+                alert("Maximum File Size Exceeded!");
         }
     };
     const onDelete = async() => {
@@ -180,7 +178,7 @@ export default function Tweet({ username, photo, tweet, userId, id }:ITweet) {
             } catch(e) {
                 if(!(e instanceof StorageError && e.code === 'storage/object-not-found'))
                     throw e;
-            } 
+            }
             if (newFile) {
                 const result = await uploadBytes(photoRef, newFile);
                 const url = await getDownloadURL(result.ref);
