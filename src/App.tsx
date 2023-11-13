@@ -55,6 +55,16 @@ const GlobalStyles = createGlobalStyle`
     color: white;
     font-family: 'Patua One', serif;
   }
+  &::-webkit-scrollbar {
+      width: 8px;  
+  }
+  &::-webkit-scrollbar-thumb {
+      background: #98D8AA; /* 스크롤바 색상 */
+      border-radius: 10px; /* 스크롤바 둥근 테두리 */
+  }
+  &::-webkit-scrollbar-track {
+      background: rgba(220, 20, 60, 0.1);  /*스크롤바 뒷 배경 색상*/
+  }
 `;
 
 const Wrapper = styled.div`
